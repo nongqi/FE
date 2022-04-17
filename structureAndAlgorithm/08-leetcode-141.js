@@ -2,7 +2,7 @@
  * @Author: jack
  * @Date: 2022-04-17 16:50:35
  * @LastEditors: jack
- * @LastEditTime: 2022-04-17 23:19:45
+ * @LastEditTime: 2022-04-17 23:26:50
  * @Description: 141. 环形链表
  */
 
@@ -16,6 +16,7 @@ function ListNode(val, next) {
 }
 
 var hasCycle = function (head) {
+  if (!head) return;
   // 慢指针
   let p1 = head;
   // 快指针
