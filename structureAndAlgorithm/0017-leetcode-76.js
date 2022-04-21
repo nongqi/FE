@@ -1,7 +1,7 @@
 /*
  * @Author: vayne
  * @Date: 2022-04-20 23:01:47
- * @LastEditTime: 2022-04-21 00:26:26
+ * @LastEditTime: 2022-04-21 13:52:45
  * @LastEditors: vayne.nong
  * @Description: 76. 最小覆盖子串
  */
@@ -60,6 +60,7 @@ var minWindow = function (s, t) {
       if (need.has(c2)) {
         need.set(c2, need.get(c2) + 1);
         if (need.get(c2) === 1) needType++
+        // needType++
       }
       // 左指针向左移动
       l = l + 1;
@@ -74,3 +75,4 @@ var minWindow = function (s, t) {
 console.log(minWindow('ADOBECODEBANC', 'ABC') === 'BANC');
 console.log(minWindow('a', 'a') === 'a');
 console.log(minWindow('a', 'tt') === '');
+console.log(minWindow('abc', 'b') === 'b');
