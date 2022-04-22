@@ -1,7 +1,7 @@
 /*
  * @Author: vayne
  * @Date: 2022-04-22 00:26:19
- * @LastEditTime: 2022-04-22 00:29:34
+ * @LastEditTime: 2022-04-22 00:34:02
  * @LastEditors: vayne.nong
  * @Description:
  */
@@ -47,10 +47,10 @@ const bfs = (root) => {
   while (q.length > 0) {
     const node = q.shift();
     console.log(node.val);
-    node.children.forEach((item) => {
-      q.push(item);
+    node.children.forEach((child) => {
+      q.push(child);
     });
   }
 };
 
-bfs(tree); // abdecfg
+bfs(tree); // abcdefg
