@@ -1,7 +1,7 @@
 /*
  * @Author: vayne
  * @Date: 2022-04-22 22:15:53
- * @LastEditTime: 2022-04-22 22:17:36
+ * @LastEditTime: 2022-04-23 23:21:03
  * @LastEditors: vayne.nong
  * @Description: 
  */
@@ -45,12 +45,34 @@ const tree = {
   },
 };
 
-const postOrder = (root) => {
-  if (!root) return;
+// const postOrder = (root) => {
+//   if (!root) return;
 
-  preOrder(root.left);
-  preOrder(root.right);
-  console.log(root.val);
-};
+//   preOrder(root.left);
+//   preOrder(root.right);
+//   console.log(root.val);
+// };
 
-preOrder(tree); 
+// 把前序遍历倒置 =》 后序遍历
+const postOrder =(root) => {
+  if (!root) return
+
+  const stack = [root];
+  const outputStack = [];
+
+  while(stack.length) {
+    // 右左根
+    const top = stack.pop();
+    outputStack.push(top)
+    if (top.left) stack.push(top.left)
+    if (top.right) stack.push(top.right)
+  }
+
+  while(outputStack.length) {
+    const outTop = outputStack.pop()
+    console.log(outTop.val);
+  }
+
+}
+
+postOrder(tree);  // 1234567
