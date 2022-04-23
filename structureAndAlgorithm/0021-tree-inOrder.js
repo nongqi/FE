@@ -1,7 +1,7 @@
 /*
  * @Author: vayne
  * @Date: 2022-04-22 12:08:48
- * @LastEditTime: 2022-04-22 22:12:04
+ * @LastEditTime: 2022-04-23 22:53:30
  * @LastEditors: vayne.nong
  * @Description: 二叉树的中序遍历
  */
@@ -38,12 +38,30 @@ const tree = {
   },
 };
 
-const preOrder = (root) => {
-  if (!root) return;
+// 递归
+// const inOrder = (root) => {
+//   if (!root) return;
 
-  preOrder(root.left);
-  console.log(root.val);
-  preOrder(root.right);
-};
+//   inOrder(root.left);
+//   console.log(root.val);
+//   inOrder(root.right);
+// };
 
-preOrder(tree); // 1234567
+// 非递归-栈实现
+const inOrder = (root) => {
+  if (!root) return
+  const stack = [];
+  let p = root;
+
+  while(stack.length || p) {
+    while(p) {
+      stack.push(p)
+      p = p.left;
+    }
+    const top = stack.pop()
+    console.log(top.val);
+    p = top.right;
+  }
+}
+
+inOrder(tree); // 1234567

@@ -1,7 +1,7 @@
 /*
  * @Author: vayne
  * @Date: 2022-04-22 18:04:09
- * @LastEditTime: 2022-04-22 18:04:09
+ * @LastEditTime: 2022-04-23 21:54:38
  * @LastEditors: vayne.nong
  * @Description: 
  */
@@ -48,12 +48,27 @@ const tree = {
   },
 };
 
-const preOrder = (root) => {
-  if(!root) return
+// 递归版
+// const preOrder = (root) => {
+//   if(!root) return
 
-  console.log(root.val);
-  preOrder(root.left)
-  preOrder(root.right)
+//   console.log(root.val);
+//   preOrder(root.left)
+//   preOrder(root.right)
+// }
+
+// 利用栈实现
+const preOrder = (root) => {
+  if (!root) return
+  const stack = [root]
+
+  while(stack.length) {
+    const top = stack.pop();
+    console.log(top.val);
+    // 因为先进后出，所以要右节点入栈
+    if (top.right) stack.push(top.right)
+    if (top.left) stack.push(top.left)
+  }
 }
 
 preOrder(tree) // 1234567
