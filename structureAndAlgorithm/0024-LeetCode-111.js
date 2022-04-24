@@ -1,7 +1,7 @@
 /*
  * @Author: vayne
  * @Date: 2022-04-24 23:50:13
- * @LastEditTime: 2022-04-25 00:32:51
+ * @LastEditTime: 2022-04-25 00:41:38
  * @LastEditors: vayne.nong
  * @Description: 111. 求二叉树最小深度
  */
@@ -28,17 +28,21 @@ function TreeNode(val, left, right) {
 var minDepth = function (root) {
   if (!root) return 0;
   // 利用数组，来记录层级
-  const q = [[root, 1]];
-  while(q.length) {
-    const [n, l] = q.shift()
+  const queue = [[root, 1]];
+  while(queue.length) {
+    const [node, level] = queue.shift()
     // console.log(n.val, l);
     // 广度优先遍历中，遇到的第一个叶子节点，就是深度最小的叶子节点
     // 如果为叶子节点, 则它的left 和 right 为 undefined
-    if (!n.left && !n.right) return l
-    if (n.left) q.push([n.left, l + 1])
-    if (n.right) q.push([n.right, l + 1])
+    if (!node.left && !level.right) return level
+    if (node.left) queue.push([node.left, level + 1])
+    if (node.right) queue.push([node.right, level + 1])
   }
 };
+// 如果数组的解构，不好理解，那么可以利用对象
+// const queue = [[root, 1]]; => const queue = [{node: root, level: 1}];
+// const queue = [[root, 1]];
+
 
 const tree = new TreeNode(
   3,
@@ -50,3 +54,4 @@ console.log(minDepth(tree) === 2);
 
 // 总结：
 // 时间复杂度： On，有一个while循环
+// 空间复杂度：On 一个数组
