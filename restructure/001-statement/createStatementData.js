@@ -1,44 +1,18 @@
 /*
  * @Author: vayne
- * @Date: 2022-04-26 08:49:51
- * @LastEditTime: 2022-04-29 16:54:55
+ * @Date: 2022-04-29 17:01:55
+ * @LastEditTime: 2022-04-29 17:25:09
  * @LastEditors: vayne.nong
- * @Description:
+ * @Description: 创建 StatementData
  */
 
-const PLAYS = {
-  hamlet: { name: 'Hamlet', type: 'tragedy' },
-  'as-like': { name: 'As You Like It', type: 'comedy' },
-  othello: { name: 'Othello', type: 'tragedy' },
-};
-
-const INVOICES = [
-  {
-    customer: 'BigCo',
-    performances: [
-      {
-        playID: 'hamlet',
-        audience: 55,
-      },
-      {
-        playID: 'as-like',
-        audience: 35,
-      },
-      {
-        playID: 'othello',
-        audience: 40,
-      },
-    ],
-  },
-];
-
-function statement(invoice, plays) {
+function createStatementData(invoice, plays) {
   const statementData = {};
   statementData.customer = invoice.customer;
   statementData.performances = invoice.performances.map(enrichPerformances);
-  statementData.totalAmount = totalVolumeCredits(statementData)
-  statementData.totalAmount = totalAmount(statementData)
-  return renderPlainText(statementData, plays);
+  statementData.totalVolumeCredits = totalVolumeCredits(statementData);
+  statementData.totalAmount = totalAmount(statementData);
+  return statementData;
 
   function totalVolumeCredits(data) {
     return data.performances.reduce((total, p) => total + p.volumeCredits, 0);
@@ -91,28 +65,7 @@ function statement(invoice, plays) {
   }
 }
 
-function renderPlainText(data) {
-  let result = `Statement for ${data.customer}\n`;
+module.exports = createStatementData;
 
-  for (let perf of data.performances) {
-    // print line for this order
-    result += `  ${perf.play.name}: ${usd(perf.amount)} ${
-      perf.audience
-    } seats\n`;
-  }
-  result += `Amount owed os ${usd(data.totalAmount)}\n`;
-  result += `You earned ${data.totalVolumeCredits} credits\n`;
-  return result;
 
-  function usd(aNumber) {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 2,
-    }).format(aNumber / 100);
-  }
 
-  
-}
-
-console.log(statement(INVOICES[0], PLAYS));
