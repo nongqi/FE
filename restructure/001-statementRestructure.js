@@ -1,7 +1,7 @@
 /*
  * @Author: vayne
  * @Date: 2022-04-26 08:49:51
- * @LastEditTime: 2022-04-29 16:09:43
+ * @LastEditTime: 2022-04-29 16:18:49
  * @LastEditors: vayne.nong
  * @Description:
  */
@@ -40,7 +40,12 @@ function statement (invoice, plays) {
 
   function enrichPerformances(aPerformances) {
     const result = Object.assign({}, aPerformances);
+    result.play = playFor(result)
     return result;
+
+    function playFor(aPerformances) {
+      return plays[aPerformances.playID];
+    }
   }
 }
 
@@ -49,7 +54,7 @@ function renderPlainText(data, plays) {
 
   for (let perf of data.performances) {
     // print line for this order
-    result += `  ${playFor(perf).name}: ${usd(amountFor(perf))} ${
+    result += `  ${perf.play.name}: ${usd(amountFor(perf))} ${
       perf.audience
     } seats\n`;
   }
@@ -57,13 +62,11 @@ function renderPlainText(data, plays) {
   result += `You earned ${totalVolumeCredits()} credits\n`;
   return result;
 
-  function playFor(aPerformances) {
-    return plays[aPerformances.playID];
-  }
+  
 
   function amountFor(aPerformances) {
     let result = 0;
-    switch (playFor(aPerformances).type) {
+    switch (aPerformances.play.type) {
       case 'tragedy':
         result = 40000;
         if (aPerformances.audience > 30) {
@@ -77,7 +80,7 @@ function renderPlainText(data, plays) {
         }
         break;
       default:
-        throw new Error(`unknown type: ${playFor(aPerformances).type}`);
+        throw new Error(`unknown type: ${aPerformances.play.type}`);
     }
     return result;
   }
@@ -85,7 +88,7 @@ function renderPlainText(data, plays) {
   function volumeCreditsFor(aPerformances) {
     let result = 0;
     result += Math.max(aPerformances.audience - 30, 0);
-    if ('comedy' === playFor(aPerformances).type)
+    if ('comedy' === aPerformances.play.type)
       result += Math.floor(aPerformances.audience / 5);
     return result;
   }
