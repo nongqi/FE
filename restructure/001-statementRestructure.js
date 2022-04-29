@@ -1,7 +1,7 @@
 /*
  * @Author: vayne
  * @Date: 2022-04-26 08:49:51
- * @LastEditTime: 2022-04-29 15:26:14
+ * @LastEditTime: 2022-04-29 15:36:43
  * @LastEditors: vayne.nong
  * @Description:
  */
@@ -32,8 +32,11 @@ const INVOICES = [
   },
 ];
 
+function statement (invoice, plays) {
+  return renderPlainText(invoice, plays);
+}
 
-function statement(invoice, plays) {
+function renderPlainText(invoice, plays) {
   let result = `Statement for ${invoice.customer}\n`;
 
   for (let perf of invoice.performances) {
