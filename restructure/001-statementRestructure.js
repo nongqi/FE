@@ -1,7 +1,7 @@
 /*
  * @Author: vayne
  * @Date: 2022-04-26 08:49:51
- * @LastEditTime: 2022-04-29 16:35:34
+ * @LastEditTime: 2022-04-29 16:41:01
  * @LastEditors: vayne.nong
  * @Description:
  */
@@ -36,7 +36,25 @@ function statement(invoice, plays) {
   const statementData = {};
   statementData.customer = invoice.customer;
   statementData.performances = invoice.performances.map(enrichPerformances);
+  statementData.totalAmount = totalVolumeCredits(statementData)
+  statementData.totalAmount = totalAmount(statementData)
   return renderPlainText(statementData, plays);
+
+  function totalVolumeCredits(data) {
+    let result = 0;
+    for (let perf of data.performances) {
+      result += perf.volumeCredits;
+    }
+    return result;
+  }
+
+  function totalAmount(data) {
+    let result = 0;
+    for (let perf of data.performances) {
+      result += perf.amount;
+    }
+    return result;
+  }
 
   function enrichPerformances(aPerformances) {
     const result = Object.assign({}, aPerformances);
@@ -90,8 +108,8 @@ function renderPlainText(data) {
       perf.audience
     } seats\n`;
   }
-  result += `Amount owed os ${usd(totalAmount())}\n`;
-  result += `You earned ${totalVolumeCredits()} credits\n`;
+  result += `Amount owed os ${usd(data.totalAmount)}\n`;
+  result += `You earned ${data.totalVolumeCredits} credits\n`;
   return result;
 
   function usd(aNumber) {
@@ -102,21 +120,7 @@ function renderPlainText(data) {
     }).format(aNumber / 100);
   }
 
-  function totalVolumeCredits() {
-    let result = 0;
-    for (let perf of data.performances) {
-      result += perf.volumeCredits;
-    }
-    return result;
-  }
-
-  function totalAmount() {
-    let result = 0;
-    for (let perf of data.performances) {
-      result += perf.amount;
-    }
-    return result;
-  }
+  
 }
 
 console.log(statement(INVOICES[0], PLAYS));
