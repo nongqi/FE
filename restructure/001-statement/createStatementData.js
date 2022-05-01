@@ -1,7 +1,7 @@
 /*
  * @Author: vayne
  * @Date: 2022-04-29 17:01:55
- * @LastEditTime: 2022-05-01 17:48:01
+ * @LastEditTime: 2022-05-01 17:56:27
  * @LastEditors: vayne.nong
  * @Description: 创建 StatementData
  */
@@ -60,11 +60,7 @@ class PerformanceCalculator {
     throw new Error('subclass responsibility!')
   }
   get volumeCredits() {
-    let result = 0;
-    result += Math.max(this.performances.audience - 30, 0);
-    if ('comedy' === this.play.type)
-      result += Math.floor(this.performances.audience / 5);
-    return result;
+    return Math.max(this.performances.audience - 30, 0);
   }
 }
 
@@ -85,6 +81,9 @@ class ComedyCalculator extends PerformanceCalculator {
       result += 10000 + 500 * (this.performances.audience - 20);
     }
     return result;
+  }
+  get volumeCredits() {
+    return super.volumeCredits + Math.floor(this.performances.audience / 5);
   }
 }
 
