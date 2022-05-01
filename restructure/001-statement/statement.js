@@ -1,7 +1,7 @@
 /*
  * @Author: vayne
  * @Date: 2022-04-26 08:49:51
- * @LastEditTime: 2022-04-29 17:23:44
+ * @LastEditTime: 2022-05-01 16:01:43
  * @LastEditors: vayne.nong
  * @Description:
  */
@@ -55,6 +55,24 @@ function renderHtml(data) {
   return result;
 }
 
+function statement(invoice, plays) {
+  return renderPlainText(createStatementData(invoice, plays));
+}
+
+function renderPlainText(data) {
+  let result = `Statement for ${data.customer}\n`;
+
+  for (let perf of data.performances) {
+    // print line for this order
+    result += `  ${perf.play.name}: ${usd(perf.amount)} ${
+      perf.audience
+    } seats\n`;
+  }
+  result += `Amount owed os ${usd(data.totalAmount)}\n`;
+  result += `You earned ${data.totalVolumeCredits} credits\n`;
+  return result;
+}
+
 function usd(aNumber) {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -64,3 +82,5 @@ function usd(aNumber) {
 }
 
 console.log(htmlStatement(INVOICES[0], PLAYS));
+console.log(statement(INVOICES[0], PLAYS));
+
