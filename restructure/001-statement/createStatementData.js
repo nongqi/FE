@@ -1,7 +1,7 @@
 /*
  * @Author: vayne
  * @Date: 2022-04-29 17:01:55
- * @LastEditTime: 2022-04-29 17:25:09
+ * @LastEditTime: 2022-05-01 16:40:07
  * @LastEditors: vayne.nong
  * @Description: 创建 StatementData
  */
@@ -23,8 +23,9 @@ function createStatementData(invoice, plays) {
   }
 
   function enrichPerformances(aPerformances) {
+    const calculator = new PerformanceCalculator(aPerformances, playFor(aPerformances));
     const result = Object.assign({}, aPerformances);
-    result.play = playFor(result);
+    result.play = calculator.play;
     result.amount = amountFor(result);
     result.volumeCredits = volumeCreditsFor(result);
 
@@ -62,6 +63,14 @@ function createStatementData(invoice, plays) {
         result += Math.floor(aPerformances.audience / 5);
       return result;
     }
+  }
+}
+
+class PerformanceCalculator {
+  constructor(aPerformances, aPlay) {
+    this.performances = aPerformances;
+    this.play = aPlay;
+
   }
 }
 

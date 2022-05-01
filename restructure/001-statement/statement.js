@@ -1,7 +1,7 @@
 /*
  * @Author: vayne
  * @Date: 2022-04-26 08:49:51
- * @LastEditTime: 2022-05-01 16:01:43
+ * @LastEditTime: 2022-05-01 16:41:23
  * @LastEditors: vayne.nong
  * @Description:
  */
@@ -81,6 +81,6 @@ function usd(aNumber) {
   }).format(aNumber / 100);
 }
 
-console.log(htmlStatement(INVOICES[0], PLAYS));
+// console.log(htmlStatement(INVOICES[0], PLAYS));
 console.log(statement(INVOICES[0], PLAYS));
 
