@@ -1,7 +1,7 @@
 /*
  * @Author: vayne
  * @Date: 2022-04-29 17:01:55
- * @LastEditTime: 2022-05-01 17:06:05
+ * @LastEditTime: 2022-05-01 17:48:01
  * @LastEditors: vayne.nong
  * @Description: 创建 StatementData
  */
@@ -23,7 +23,7 @@ function createStatementData(invoice, plays) {
   }
 
   function enrichPerformances(aPerformances) {
-    const calculator = new PerformanceCalculator(
+    const calculator = createPerformanceCalculator(
       aPerformances,
       playFor(aPerformances)
     );
@@ -40,36 +40,50 @@ function createStatementData(invoice, plays) {
   }
 }
 
+function createPerformanceCalculator(aPerformances, aPlay) {
+  // return new PerformanceCalculator(aPerformances, aPlay)
+  switch (aPlay.type) {
+    case 'tragedy':
+      return new TragedyCalculator(aPerformances, aPlay);
+    case 'comedy':
+      return new ComedyCalculator(aPerformances, aPlay);
+    default:
+      throw new Error(`unknown type: ${this.play.type}`);
+  }
+}
 class PerformanceCalculator {
   constructor(aPerformances, aPlay) {
     this.performances = aPerformances;
     this.play = aPlay;
   }
   get amount() {
-    let result = 0;
-    switch (this.play.type) {
-      case 'tragedy':
-        result = 40000;
-        if (this.performances.audience > 30) {
-          result += 1000 * (this.performances.audience - 30);
-        }
-        break;
-      case 'comedy':
-        result = 30000;
-        if (this.performances.audience > 20) {
-          result += 10000 + 500 * (this.performances.audience - 20);
-        }
-        break;
-      default:
-        throw new Error(`unknown type: ${this.play.type}`);
-    }
-    return result;
+    throw new Error('subclass responsibility!')
   }
   get volumeCredits() {
     let result = 0;
     result += Math.max(this.performances.audience - 30, 0);
     if ('comedy' === this.play.type)
       result += Math.floor(this.performances.audience / 5);
+    return result;
+  }
+}
+
+class TragedyCalculator extends PerformanceCalculator {
+  get amount() {
+    let result = 40000;
+    if (this.performances.audience > 30) {
+      result += 1000 * (this.performances.audience - 30);
+    }
+    return result;
+  }
+}
+
+class ComedyCalculator extends PerformanceCalculator {
+  get amount() {
+    let result = 30000;
+    if (this.performances.audience > 20) {
+      result += 10000 + 500 * (this.performances.audience - 20);
+    }
     return result;
   }
 }
