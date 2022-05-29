@@ -1,8 +1,8 @@
 /*
  * @Author: vayne
  * @Date: 2022-05-07 15:19:09
- * @LastEditTime: 2022-05-24 13:52:06
- * @LastEditors: vayne.nong
+ * @LastEditTime: 2022-05-29 22:36:59
+ * @LastEditors: jack
  * @Description:
  */
 class MinHeap {
@@ -38,7 +38,7 @@ class MinHeap {
   shiftUp(index) {
     if (index === 0) return;
     const parentIndex = this.getParentIndex(index);
-    if (this.heap[parentIndex] > this.heap[index]) {
+    if (this.heap[parentIndex] && this.heap[parentIndex] > this.heap[index]) {
       this.swap(parentIndex, index);
       this.shiftUp(parentIndex);
     }
@@ -47,12 +47,15 @@ class MinHeap {
     let leftIndex = this.getLeftIndex(index);
     let rightIndex = this.getRightIndex(index);
 
-    if (this.heap[index] > this.heap[leftIndex]) {
+    if (this.heap[leftIndex] && this.heap[leftIndex] < this.heap[index]) {
       this.swap(leftIndex, index);
       this.shiftDown(leftIndex);
     }
 
-    if (this.heap[index] > this.heap[rightIndex]) {
+    if (
+      this.heap[rightIndex] &&
+      this.heap[rightIndex] < this.heap[rightIndex]
+    ) {
       this.swap(rightIndex, index);
       this.shiftDown(rightIndex);
     }
@@ -63,7 +66,7 @@ class MinHeap {
   }
   /**
    * 删除堆顶
-   * @returns 
+   * @returns
    */
   pop() {
     if (this.size() < 1) return;
@@ -75,14 +78,14 @@ class MinHeap {
   }
   /**
    * 获取堆的大小
-   * @returns 
+   * @returns
    */
   size() {
     return this.heap.length;
   }
   /**
    * 获取堆顶
-   * @returns 
+   * @returns
    */
   peek() {
     return this.heap[0];
@@ -92,6 +95,4 @@ class MinHeap {
 const h = new MinHeap();
 
 let arr = [6, 3, 8, 5, 4, 10, 7, 2];
-arr.forEach(item => [
-  h.insert(item)
-])
+arr.forEach((item) => [h.insert(item)]);
