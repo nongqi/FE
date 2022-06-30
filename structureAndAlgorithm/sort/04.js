@@ -1,8 +1,8 @@
 /*
  * @Author: vayne
  * @Date: 2022-06-30 17:16:26
- * @LastEditTime: 2022-06-30 17:32:22
- * @LastEditors: vayne.nong
+ * @LastEditTime: 2022-06-30 22:20:55
+ * @LastEditors: Please set LastEditors
  * @Description:
  */
 // 归并算法
@@ -14,3 +14,40 @@
 // - 新建一个 res 空数组，用于存放最终排序后的数组。
 // - 比较两个有序数组的头部，比较小者出队并推入res中。
 // - 如果两个有序数组还有值，就重复第二步
+
+Array.prototype.mergeSort = function () {
+  const rec = (arr) => {
+    if (arr.length === 1) return arr;
+
+    const mid = Math.floor(arr.length / 2);
+    const leftArr = arr.slice(0, mid);
+    const rightArr = arr.slice(mid, this.length);
+    const orderLeft = rec(leftArr);
+    const orderRight = rec(rightArr);
+
+    let res = [];
+    while (orderLeft.length || orderRight.length) {
+      if (orderLeft.length && orderRight.length) {
+        res.push(orderLeft[0] < orderRight[0] ? orderLeft.shift() : orderRight.shift());
+      } else if (orderLeft.length) {
+        res.push(orderLeft.shift());
+      } else {
+        res.push(orderRight.shift());
+      }
+    }
+
+    return res;
+  };
+
+  const res = rec(this);
+
+  res.forEach((n, i) => {
+    this[i] = n
+  })
+};
+
+const arr = [5, 4, 3, 2, 1];
+arr.mergeSort();
+console.log('====================================');
+console.log(arr);
+console.log('====================================');
