@@ -1,7 +1,7 @@
 /*
  * @Author: vayne
  * @Date: 2022-06-30 17:16:26
- * @LastEditTime: 2022-06-30 22:20:55
+ * @LastEditTime: 2022-06-30 22:23:26
  * @LastEditors: Please set LastEditors
  * @Description:
  */
@@ -51,3 +51,8 @@ arr.mergeSort();
 console.log('====================================');
 console.log(arr);
 console.log('====================================');
+
+// 归并排序的时间复杂度
+// 分的时间复杂度是 O(logN)
+// 合的时间复杂度是 O(n)
+// 总时间复杂度： O(n*logN)
