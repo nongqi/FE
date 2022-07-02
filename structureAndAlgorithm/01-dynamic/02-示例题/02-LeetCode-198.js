@@ -41,9 +41,9 @@ var rob = function (nums) {
   let dp0 = 0;
   let dp1 = nums[0];
   for (let i = 2; i <= nums.length; i++) {
-    const temp = dp0;
+    const  dp2 = Math.max(dp0 + nums[i - 1], dp1);
     dp0 = dp1;
-    dp1 = Math.max(temp + nums[i - 1], dp1);
+    dp1 = dp2
   }
   console.log(dp1);
   return dp1;
